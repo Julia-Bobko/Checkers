@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>87975cf8-9fc3-4192-9f90-55f30a9b8508</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Checkers</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\CheckersGame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\CurrentGame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\InputGame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ResultStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\UpdateStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CheckerColors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\GridChecker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\MD5Helper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\SettingsHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Local\LocalGame.xaml.cs">
+      <DependentUpon>LocalGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Online\AuthorizePage.xaml.cs">
+      <DependentUpon>AuthorizePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Online\ListGamers.xaml.cs">
+      <DependentUpon>ListGamers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Online\OnlineGame.xaml.cs">
+      <DependentUpon>OnlineGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Online\OnlineGameDetails.xaml.cs">
+      <DependentUpon>OnlineGameDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AuthorizeService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\GameService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Local\LocalGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Online\AuthorizePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Online\ListGamers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Online\OnlineGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Online\OnlineGameDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Images\blackBoard2.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\blackBoard1.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\blackBoard.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\blackChecker.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\checker-black.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\checker-white.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\dBlackChecker.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\dchecker-black.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\dchecker-white.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\dRedChecker.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\redChecker.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\whiteBoard.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\whiteBoard2.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\whiteBoard1.png" />
+  </ItemGroup>
+</Project>
