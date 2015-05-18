@@ -123,13 +123,15 @@ namespace Checkers
         {
             var random = new Random();
            // int currentValue = random.Next(1, 3);
-            int currentValue = 1;
+            int currentValue = 1;            
             IdGame = game.IdGame;
             var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
             int idSecondGamer = (int)roamingSettings.Values["idFirstGamer"];
-            var response = await gameService.OnlineGameServiceCall("GET", String.Format("StartGame/{0}/{1}/{2}", game.IdGame, idSecondGamer, currentValue == 1 ? idSecondGamer : game.IdFirstGamer));
+            var idCurrentGamer = currentValue == 1 ? idSecondGamer : game.IdFirstGamer;
+            var response = await gameService.OnlineGameServiceCall("GET", String.Format("StartGame/{0}/{1}/{2}", game.IdGame, idSecondGamer, idCurrentGamer));
             XDocument xml = XDocument.Parse(CleanXml(response));
-            var result = xml.Descendants("StartGameResult").FirstOrDefault().Element("Success").Value;
+           // var result = xml.Descendants("StartGameResult").FirstOrDefault().Element("Success").Value;
+            var result = xml.Root.Value;
             var isStarted = result == "true" ? true : false;
             if (!isStarted)
             {
@@ -137,7 +139,7 @@ namespace Checkers
             }
             else
             {
-                int idCurrentGamer = Convert.ToInt32(xml.Descendants("StartGameResult").FirstOrDefault().Element("IdCurrentGamer").Value);
+               // int idCurrentGamer = Convert.ToInt32(xml.Descendants("StartGameResult").FirstOrDefault().Element("IdCurrentGamer").Value);
                 Frame.Navigate(typeof(OnlineGame), String.Format("{0},{1}", idCurrentGamer, game.IdGame));
             }
         }
