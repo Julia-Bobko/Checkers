@@ -97,7 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\Json60r8\Bin\WinRT\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Json60r8\Bin\WinRT\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
