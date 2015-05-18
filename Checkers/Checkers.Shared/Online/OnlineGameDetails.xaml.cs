@@ -29,6 +29,10 @@ namespace Checkers
     {
         private GameService gameService = null;
         private ListBox ListCurrentGames = default(ListBox);
+        private ListBox ListOnlineGamers = default(ListBox);
+        private TextBox FindLogin = default(TextBox);
+        private DispatcherTimer UpdateStateTimer { get; set; }
+        private int IdGame { get; set; }
         public OnlineGameDetails()
         {
             this.InitializeComponent();
@@ -38,7 +42,29 @@ namespace Checkers
 #endif
             gameService = new GameService();
             CreateGame();
-            //PopulateCurrentGames();
+
+            UpdateStateTimer = new DispatcherTimer();
+            UpdateStateTimer.Interval = TimeSpan.FromSeconds(5);
+            UpdateStateTimer.Tick += async delegate
+            {
+                int myGamerId = SettingsHelper.GetCurrentGamerId();
+                var response = await gameService.OnlineGameServiceCall("GET", String.Format("CheckInputGame/{0}", myGamerId));
+                XDocument xml = XDocument.Parse(CleanXml(response));
+                var result = xml.Root.Value;
+                var d = result == "true" ? true : false;
+                if (!result.Contains("00"))
+                //if (!d)
+                {
+                    //прислать челу уведомление о входящей игре
+
+                    ///////////////
+                    CreateGame();//создаем для нас новую игру, чтобы остальные могли к нам подключиться
+                    string idGame = xml.Descendants("CheckInputGameResult").FirstOrDefault().Element("IdGame").Value;
+                    string idCurrentGamer = xml.Descendants("CheckInputGameResult").FirstOrDefault().Element("IdCurrentGamer").Value;
+                    Frame.Navigate(typeof(OnlineGame), String.Format("{0},{1}", idCurrentGamer, idGame));
+                }
+            };
+            UpdateStateTimer.Start();           
         }
 
 
@@ -57,7 +83,44 @@ namespace Checkers
                 e.Handled = true;
             }
         }
-#endif   
+#endif                
+
+        private async void StartGame(CheckersGame game)
+        {
+            var random = new Random();
+            int currentValue = random.Next(1, 3);
+            IdGame = game.IdGame;
+            var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            int idSecondGamer = (int)roamingSettings.Values["idFirstGamer"];
+            var idCurrentGamer = currentValue == 1 ? idSecondGamer : game.IdFirstGamer;
+            var response = await gameService.OnlineGameServiceCall("GET", String.Format("StartGame/{0}/{1}/{2}", game.IdGame, idSecondGamer, idCurrentGamer));
+            XDocument xml = XDocument.Parse(CleanXml(response));
+            var result = xml.Root.Value;
+            var isStarted = result == "true" ? true : false;
+            if (!isStarted)
+            {
+                //TODO:
+            }
+            else
+            {
+                Frame.Navigate(typeof(OnlineGame), String.Format("{0},{1}", idCurrentGamer, game.IdGame));
+            }
+        }
+
+        private void ListOnlineGamers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                var game = (CheckersGame)e.AddedItems[0];
+                StartGame(game);
+            }
+        }
+
+        private void findLogin_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            PopulateOnlineGamers(FindLogin.Text.Length > 0 ? FindLogin.Text : "0");
+        }
+
 
         private async void CreateGame()
         {
@@ -73,6 +136,7 @@ namespace Checkers
 
             }
         }
+
 
      
         private async void PopulateCurrentGames()
@@ -101,6 +165,32 @@ namespace Checkers
             ListCurrentGames.ItemsSource = listGames;
         }
 
+        private async void PopulateOnlineGamers(string userName = "0")
+        {
+            var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            int idFirstGamer = (int)roamingSettings.Values["idFirstGamer"];
+            string xmlListGames = await gameService.OnlineGameServiceCall("GET", String.Format("GetGames/{0}/{1}/{2}", idFirstGamer.ToString(), userName, "0"));
+            XDocument xml = XDocument.Parse(CleanXml(xmlListGames));
+            var listGames = new List<CheckersGame>();
+            foreach (var item in xml.Descendants("CheckersGame"))
+            {
+                try
+                {
+                    CheckersGame game = new CheckersGame();
+                    game.IdGame = Convert.ToInt32(item.Element("IdGame").Value);
+                    game.Login = item.Element("Login").Value;
+                    game.Rating = Convert.ToInt32(item.Element("Rating").Value);
+                    game.IdFirstGamer = Convert.ToInt32(item.Element("IdFirstGamer").Value);
+                    listGames.Add(game);
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            ListOnlineGamers.ItemsSource = listGames;
+        }
+
         private string CleanXml(string xml)
         {
             return xml
@@ -110,17 +200,22 @@ namespace Checkers
                 .Replace("http://tempuri.org/", "");
         }
 
-        private void findGame_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(ListGamers));
-        }
+        //private void findGame_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Frame.Navigate(typeof(ListGamers));
+        //}
 
 
         private void ListCurrentGames_Loaded(object sender, RoutedEventArgs e)
         {
-            // var a = (ListBox)sender;
             ListCurrentGames = sender as ListBox;
             PopulateCurrentGames();            
+        }
+
+        private void ListOnlineGamers_Loaded(object sender, RoutedEventArgs e)
+        {
+            ListOnlineGamers = sender as ListBox;
+            PopulateOnlineGamers();
         }
 
         private void ListCurrentGames_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -147,5 +242,12 @@ namespace Checkers
             if (Frame.CanGoBack)
                 Frame.GoBack();
         }
+
+        private void findLogin_Loaded(object sender, RoutedEventArgs e)
+        {
+            FindLogin = sender as TextBox;          
+        }
+
+    
     }
 }
