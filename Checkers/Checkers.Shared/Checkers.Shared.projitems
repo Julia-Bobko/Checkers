@@ -24,49 +24,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GridChecker.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\MD5Helper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\SettingsHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Local\LocalGame.xaml.cs">
-      <DependentUpon>LocalGame.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Local\LocalGame.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Online\AuthorizePage.xaml.cs">
-      <DependentUpon>AuthorizePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Online\ListGamers.xaml.cs">
-      <DependentUpon>ListGamers.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Online\OnlineGame.xaml.cs">
-      <DependentUpon>OnlineGame.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Online\OnlineGameDetails.xaml.cs">
-      <DependentUpon>OnlineGameDetails.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Online\AuthorizePage.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Online\ListGamers.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Online\OnlineGame.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Online\OnlineGameDetails.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AuthorizeService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\GameService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)Local\LocalGame.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Online\AuthorizePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Online\ListGamers.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Online\OnlineGame.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Online\OnlineGameDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
