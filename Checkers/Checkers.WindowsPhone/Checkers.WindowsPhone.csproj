@@ -109,10 +109,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Online\ListGamers.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Online\OnlineGame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
