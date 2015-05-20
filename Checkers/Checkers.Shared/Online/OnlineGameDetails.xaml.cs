@@ -30,6 +30,8 @@ namespace Checkers
         private GameService gameService = null;
         private ListBox ListCurrentGames = default(ListBox);
         private ListBox ListOnlineGamers = default(ListBox);
+        private ListBox ListFinishedGames = default(ListBox);
+        
         private TextBox FindLogin = default(TextBox);
         private DispatcherTimer UpdateStateTimer { get; set; }
         private int IdGame { get; set; }
@@ -246,6 +248,43 @@ namespace Checkers
         private void findLogin_Loaded(object sender, RoutedEventArgs e)
         {
             FindLogin = sender as TextBox;          
+        }
+
+        private void ListFinishedGames_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ListFinishedGames_Loaded(object sender, RoutedEventArgs e)
+        {
+            ListFinishedGames = sender as ListBox;
+            PopulateFinishedGamers();
+        }
+
+        private async void PopulateFinishedGamers()
+        {
+            var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            int idFirstGamer = (int)roamingSettings.Values["idFirstGamer"];
+            string xmlListGames = await gameService.OnlineGameServiceCall("GET", String.Format("GetFinishedGames/{0}", idFirstGamer.ToString()));
+            XDocument xml = XDocument.Parse(CleanXml(xmlListGames));
+            var listGames = new List<CurrentGame>();
+            foreach (var item in xml.Descendants("CurrentGame"))
+            {
+                try
+                {
+                    CurrentGame game = new CurrentGame();
+                    game.IdGame = Convert.ToInt32(item.Element("IdGame").Value);
+                    game.Login = item.Element("Login").Value;
+                    game.Rating = Convert.ToInt32(item.Element("Rating").Value);
+                    game.IdGamer = Convert.ToInt32(item.Element("IdGamer").Value);
+                    listGames.Add(game);
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            ListFinishedGames.ItemsSource = listGames;
         }
 
     

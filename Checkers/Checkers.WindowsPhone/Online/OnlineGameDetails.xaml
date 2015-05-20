@@ -92,8 +92,39 @@
                 </DataTemplate>
             </HubSection>
             <HubSection Header="завершенные игры">
-                <DataTemplate>
-                    <Grid />
+                <DataTemplate>                   
+                    <Grid>
+                        <StackPanel Orientation="Vertical" Margin="0,0,0,0">
+                            <ListBox x:Name="ListFinishedGames" SelectionChanged="ListFinishedGames_SelectionChanged" Loaded="ListFinishedGames_Loaded">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid HorizontalAlignment="Left" Height="141" Margin="20,0,0,20" VerticalAlignment="Top" Width="415">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="31*"/>
+                                                <ColumnDefinition Width="52*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="https://pp.vk.me/c623324/v623324292/180e1/MXdoA7KHItw.jpg"/>
+                                            <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                                <TextBlock Text="{Binding Login}" FontSize="30" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text="{Binding Rating}" TextWrapping="Wrap"></TextBlock>
+                                                <!--<TextBlock Text="{Binding Website.AbsoluteUri}" FontSize="20"></TextBlock>-->
+                                                <!--<HyperlinkButton Margin="0" HorizontalAlignment="Left" FontSize="20" NavigateUri="{Binding Website}" Content="{Binding Website.AbsoluteUri}" />-->
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                                <ListBox.Template>
+                                    <ControlTemplate TargetType="ListBox">
+                                        <Border>
+                                            <ScrollViewer Name="scrollViewerMessages">
+                                                <ItemsPresenter/>
+                                            </ScrollViewer>
+                                        </Border>
+                                    </ControlTemplate>
+                                </ListBox.Template>
+                            </ListBox>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </HubSection>
             <HubSection Header="статистика">
