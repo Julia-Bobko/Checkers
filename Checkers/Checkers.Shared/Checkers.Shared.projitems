@@ -29,7 +29,6 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Online\AuthorizePage.xaml.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Online\ListGamers.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Online\OnlineGame.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Online\OnlineGameDetails.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AuthorizeService.cs" />
