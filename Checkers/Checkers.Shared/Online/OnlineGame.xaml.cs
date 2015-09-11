@@ -108,7 +108,7 @@ namespace Checkers
                     }
 
                     string lastDeletedCheckers = xmlresponse.Descendants("GetStatusGameResult").FirstOrDefault().Element("LastDeletedCheckers").Value;
-                    if (!String.IsNullOrEmpty(lastDeletedCheckers))
+                    if (!string.IsNullOrEmpty(lastDeletedCheckers))
                     {
                         XDocument xmlLastDeletedCheckers = XDocument.Parse(lastDeletedCheckers);
                         foreach (var item in xmlLastDeletedCheckers.Descendants("checker"))
@@ -480,6 +480,7 @@ namespace Checkers
                         PopulateListMovedCheckers(currentGridChecker, newGridChecker);
                         #region для обязательного битья неограниченного кол-ва шашек подряд
                         IsResetForCheckers = true;
+                        IsResetForDCheckers = true;
                         var listCombination = NeedKillForCheckers(CurrentCheckers);
                         if (CurrentCheckers == CheckerColors.White && LastKillCheckerWhite != null)
                         {
@@ -985,6 +986,7 @@ namespace Checkers
                     LastKillCheckerWhite = null;
                     //проверяем можно ли этой дамке еще бить
                     #region для обязательного битья неограниченного кол-ва шашек подряд
+                    IsResetForCheckers = true;
                     IsResetForDCheckers = true;
                     var listCombination = NeedKillForDCheckers(CurrentCheckers);
                     if (CurrentCheckers == CheckerColors.White && LastKillDCheckerWhite != null)
@@ -1062,7 +1064,8 @@ namespace Checkers
                     LastKillCheckerWhite = null;
                     //проверяем можно ли этой дамке еще бить
                     #region для обязательного битья неограниченного кол-ва шашек подряд
-                    bool isReset = true;
+                    IsResetForCheckers = true;
+                    IsResetForDCheckers = true;
                     var listCombination = NeedKillForDCheckers(CurrentCheckers);
                     if (CurrentCheckers == CheckerColors.White && LastKillDCheckerWhite != null)
                     {
@@ -1071,7 +1074,7 @@ namespace Checkers
                             var grid = (Grid)FindName(String.Format("f{0}{1}", listComb[0].Column, listComb[0].Row));
                             if (grid == LastKillDCheckerWhite)
                             {
-                                isReset = false;
+                                IsResetForDCheckers = false;
                                 break;
                             }
                         }
@@ -1083,12 +1086,12 @@ namespace Checkers
                             var grid = (Grid)FindName(String.Format("f{0}{1}", listComb[0].Column, listComb[0].Row));
                             if (grid == LastKillDCheckerBlack)
                             {
-                                isReset = false;
+                                IsResetForDCheckers = false;
                                 break;
                             }
                         }
                     }
-                    if (isReset)
+                    if (IsResetForDCheckers)
                     {
                         CheckAvailabaleSendGridToServer();
                         ResetSteps();
