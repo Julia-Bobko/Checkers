@@ -7,7 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" NavigationCacheMode="Enabled">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="ms-appx:///Images/fon2.jpg"/>
+        </Grid.Background>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
@@ -15,13 +18,13 @@
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="backButton" Icon="Back" Height="95" Margin="10,46,10,0" Click="Back_Click"/>
         </Grid>
-        <Hub x:Name="MainHub" Header="онлайн игра" Margin="70,0,0,0">            
-<HubSection Header="новая игра">
+        <Hub x:Name="MainHub" Header="ШАШКИ ОНЛАЙН" Margin="70,0,0,0" FontSize="30" Foreground="White" FontFamily="Comic Sans MS">
+            <HubSection Header="новая игра" Foreground="White" FontFamily="Comic Sans MS" >
                 <DataTemplate>
                     <Grid>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock Text="Введите логин соперника:" Margin="10" FontSize="22"></TextBlock>
+                                <TextBlock Text="ВВЕДИТЕ ЛОГИН СОПЕРНИКА:" Margin="0,10,10,10" FontSize="22"></TextBlock>
                                 <TextBox InputScope="Search" x:Name="findLogin" Width="200" Margin="10" TextChanged="findLogin_TextChanged" Loaded="findLogin_Loaded"></TextBox>
                                 <!--<Button x:Name="findGames" Content="Найти"></Button>-->
                             </StackPanel>
@@ -35,8 +38,8 @@
                                             </Grid.ColumnDefinitions>
                                             <Image Source="https://pp.vk.me/c623324/v623324292/180e1/MXdoA7KHItw.jpg"/>
                                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                                                <TextBlock Text="{Binding Login}" FontSize="30" TextWrapping="Wrap"></TextBlock>
-                                                <TextBlock Text="{Binding Rating}" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text="{Binding Login}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text="{Binding Rating}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
                                                 <!--<TextBlock Text="{Binding Website.AbsoluteUri}" FontSize="20"></TextBlock>-->
                                                 <!--<HyperlinkButton Margin="0" HorizontalAlignment="Left" FontSize="20" NavigateUri="{Binding Website}" Content="{Binding Website.AbsoluteUri}" />-->
                                             </StackPanel>
@@ -57,7 +60,7 @@
                     </Grid>
                 </DataTemplate>
             </HubSection>
-            <HubSection Header="текущие игры">
+            <HubSection Header="текущие игры" Foreground="White" FontFamily="Comic Sans MS">
                 <DataTemplate>
                     <Grid>
                         <StackPanel Orientation="Vertical" Margin="0,0,0,0">
@@ -71,8 +74,8 @@
                                             </Grid.ColumnDefinitions>
                                             <Image Source="https://pp.vk.me/c623324/v623324292/180e1/MXdoA7KHItw.jpg"/>
                                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                                                <TextBlock Text="{Binding Login}" FontSize="30" TextWrapping="Wrap"></TextBlock>
-                                                <TextBlock Text="{Binding Rating}" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text="{Binding Login}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text="{Binding Rating}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
                                             </StackPanel>
                                         </Grid>
                                     </DataTemplate>
@@ -91,7 +94,7 @@
                     </Grid>
                 </DataTemplate>
             </HubSection>
-            <HubSection Header="завершенные игры">
+            <HubSection Header="завершенные игры" Foreground="White" FontFamily="Comic Sans MS">
                 <DataTemplate>
                     <Grid>
                         <StackPanel Orientation="Vertical" Margin="0,0,0,0">
@@ -105,8 +108,8 @@
                                             </Grid.ColumnDefinitions>
                                             <Image Source="https://pp.vk.me/c623324/v623324292/180e1/MXdoA7KHItw.jpg"/>
                                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                                                <TextBlock Text="{Binding Login}" FontSize="30" TextWrapping="Wrap"></TextBlock>
-                                                <TextBlock Text="{Binding Rating}" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text="{Binding Login}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text="{Binding Rating}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
                                                 <!--<TextBlock Text="{Binding Website.AbsoluteUri}" FontSize="20"></TextBlock>-->
                                                 <!--<HyperlinkButton Margin="0" HorizontalAlignment="Left" FontSize="20" NavigateUri="{Binding Website}" Content="{Binding Website.AbsoluteUri}" />-->
                                             </StackPanel>
@@ -127,11 +130,11 @@
                     </Grid>
                 </DataTemplate>
             </HubSection>
-            <HubSection Header="статистика">
+            <!--<HubSection Header="статистика" Foreground="White" FontFamily="Comic Sans MS">
                 <DataTemplate>
                     <Grid />
                 </DataTemplate>
-            </HubSection>
+            </HubSection>-->
         </Hub>
     </Grid>
 </Page>

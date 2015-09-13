@@ -1,12 +1,17 @@
-﻿using System;
+﻿using Facebook.Client;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+using VK.WindowsPhone.SDK_XAML;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -133,5 +138,61 @@ namespace Checkers
             // TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            base.OnActivated(args);
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                #region VK
+                var protocolArgs = args as ProtocolActivatedEventArgs;
+                VKProtocolActivationHelper.HandleProtocolLaunch(protocolArgs);
+                #endregion
+
+                #region FB
+                Session.OnFacebookAuthenticationFinished += OnFacebookAuthenticationFinished;
+                LifecycleHelper.FacebookAuthenticationReceived(protocolArgs);
+                #endregion
+            }
+
+
+        }
+
+        Task ShowDialog(AccessTokenData session)
+        {
+            CoreDispatcher dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
+            Func<object, Task<bool>> action = null;
+            action = async (o) =>
+            {
+                try
+                {
+                    if (dispatcher.HasThreadAccess)
+                    {
+                        //await new MessageDialog("Authentication via Webview succeeded. Expiry date: " + session.Expires.ToString()).ShowAsync();
+                    }
+                    else
+                    {
+                        dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                        () => action(o));
+                    }
+                    return true;
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    if (action != null)
+                    {
+                        Task.Delay(500).ContinueWith(async t => await action(o));
+                    }
+                }
+                return false;
+            };
+            return action(null);
+        }
+
+        async private void OnFacebookAuthenticationFinished(AccessTokenData session)
+        {
+            ShowDialog(session);
+        }
+
     }
 }

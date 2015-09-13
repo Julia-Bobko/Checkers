@@ -338,7 +338,7 @@ namespace Checkers
         //    newGrid.Children.Add(newImg);
         //}
         //private Image TempImage { get; set; }
-        private async void MoveChecker(GridChecker currentGridChecker, GridChecker newGridChecker)
+        private void MoveChecker(GridChecker currentGridChecker, GridChecker newGridChecker)
         {
             Sync = SynchronizationContext.Current;
             Grid currentGrid = (Grid)FindName(String.Format("f{0}{1}", currentGridChecker.Column, currentGridChecker.Row));
@@ -411,7 +411,10 @@ namespace Checkers
 
             // Begin the animation.
             justintimeStoryboard.Begin();
-
+            justintimeStoryboard.Completed += delegate
+            {
+                DeleteAndMove();
+            };
 
             //new System.Threading.ManualResetEvent(false).WaitOne(500);
             //IsDelayCompleted = false;
@@ -426,8 +429,8 @@ namespace Checkers
             TempNewGrid = newGrid;
             TempNewImg = newImg;
             TempStoryboard = justintimeStoryboard;
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            DeleteAndMove();
+            //await Task.Delay(TimeSpan.FromMilliseconds(500));
+            
 
         }
         private Grid TempCurrentGrid = null;

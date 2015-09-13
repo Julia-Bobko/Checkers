@@ -110,17 +110,35 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="Checkers.Windows_TemporaryKey.pfx" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Images\2fon1.jpg" />
+    <Content Include="Images\1fon1.jpg" />
+    <Content Include="Images\fon2.jpg" />
+    <Content Include="Images\3fon1.jpg" />
+    <Content Include="Images\social\fb.png" />
+    <Content Include="Images\social\ok.png" />
+    <Content Include="Images\social\vk_inter.png" />
+    <Content Include="FacebookConfig.xml" />
+    <Content Include="VKConfig.xml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Facebook.7.0.6\lib\win8\Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Facebook.Client, Version=0.9.1.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Facebook.Client.1.0.4\lib\win81\Facebook.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Json60r8\Bin\WinRT\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -142,6 +160,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VK.WindowsPhone.SDK-XAML\VK.WindowsPhone.SDK-XAML.csproj">
+      <Project>{a7e0fc88-a513-4981-8c2a-0106045e695b}</Project>
+      <Name>VK.WindowsPhone.SDK-XAML</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

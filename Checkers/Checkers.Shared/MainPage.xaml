@@ -8,8 +8,11 @@
     mc:Ignorable="d"
     xmlns:PageOrientation.SupportedOrientations="PortraitFlipped">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Background="Red" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="ms-appx:///Images/fon2.jpg"/>
+        </Grid.Background>
+        <StackPanel Background="Transparent" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
             <Button x:Name="localGame" Content="ЛОКАЛЬНАЯ ИГРА" Width="200" Height="100" Click="Button_Click"></Button>
             <Button x:Name="onlineGame" Content="ОНЛАЙН ИГРА" Width="200" Height="100" Click="onlineGame_Click"></Button>
         </StackPanel>

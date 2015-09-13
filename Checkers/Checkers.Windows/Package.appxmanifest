@@ -18,6 +18,14 @@
       <m2:VisualElements DisplayName="Шашки Онлайн" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="CheckerColors.Windows" ForegroundText="light" BackgroundColor="#464646">
         <m2:SplashScreen Image="Assets\SplashScreen.png" />
       </m2:VisualElements>
+      <Extensions>
+        <Extension Category="windows.protocol">
+          <Protocol Name="vk5067473" m2:DesiredView="useLess" />
+        </Extension>
+        <Extension Category="windows.protocol">
+          <Protocol Name="fb1639420669629754" m2:DesiredView="useLess" />
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>

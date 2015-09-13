@@ -5,26 +5,37 @@
     xmlns:local="using:Checkers.OnlineGame"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Controls="using:Facebook.Client.Controls"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                <TextBlock Text="Логин:" FontSize="22" Width="100"  Margin="10"></TextBlock>
-                <TextBox x:Name="login" Width="200" Margin="10"></TextBox>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="ms-appx:///Images/fon2.jpg"/>
+        </Grid.Background>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+            <!--<Controls:LoginButton SessionStateChanged="LoginButton_SessionStateChanged"/>-->
+            <TextBlock Foreground="White" FontSize="30" FontWeight="Bold" FontFamily="Comic Sans MS" Text="АВТОРИЗАЦИЯ" TextAlignment="Center"/>
+            <TextBlock x:Name="userInfo" Foreground="White" FontSize="30" Text="" TextAlignment="Center"/>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Image x:Name="vk" Source="ms-appx:///Images/social/vk_inter.png" Width="75" Margin="5,5,3,5" Tapped="vk_Tapped"></Image>
+                    <Image x:Name="fb" Source="ms-appx:///Images/social/fb.png" Width="70" Margin="5" Tapped="fb_Tapped"></Image>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                <TextBlock Text="E-mail:" FontSize="22" Width="100"  Margin="10"></TextBlock>
-                <TextBox x:Name="email" Width="200" Margin="10" InputScope="EmailSmtpAddress"></TextBox>
+            <TextBlock Foreground="White" FontSize="30" FontWeight="Bold" FontFamily="Comic Sans MS" Text="ИЛИ" Margin="50" TextAlignment="Center"/>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                    <TextBlock Text="Логин:" FontSize="22" FontFamily="Comic Sans MS" Width="100"  Margin="10"></TextBlock>
+                    <TextBox x:Name="login" Width="200" Margin="10"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                    <TextBlock Text="Пароль:" FontSize="22" FontFamily="Comic Sans MS" Width="100"  Margin="10"></TextBlock>
+                    <PasswordBox x:Name="password" Width="200" Margin="10"></PasswordBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="ВОЙТИ" x:Name="okButton" Margin="10" Click="ok_Click"></Button>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                <TextBlock Text="Пароль:" FontSize="22" Width="100"  Margin="10"></TextBlock>
-                <PasswordBox x:Name="password" Width="200" Margin="10"></PasswordBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="OK" x:Name="ok" Margin="10" Click="ok_Click"></Button>
-                <Button Content="Отмена" x:Name="cancel" Margin="10" Click="cancel_Click"></Button>
-            </StackPanel>     
         </StackPanel>
     </Grid>
 </Page>

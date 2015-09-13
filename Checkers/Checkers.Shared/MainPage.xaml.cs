@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Security.Authentication.Web;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -31,6 +32,8 @@ namespace Checkers
         public MainPage()
         {
             InitializeComponent();
+            //var appId = Windows.ApplicationModel.Store.CurrentApp.AppId;
+            string SID = WebAuthenticationBroker.GetCurrentApplicationCallbackUri().ToString();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -40,6 +43,8 @@ namespace Checkers
 
         private void onlineGame_Click(object sender, RoutedEventArgs e)
         {
+            Frame.Navigate(typeof(AuthorizePage));
+            return;
             var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
             //roamingSettings.Values["idGamer"] = "Hello World";
             Object objIdGamer = roamingSettings.Values["idFirstGamer"];
