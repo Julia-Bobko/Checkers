@@ -14,6 +14,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -41,6 +42,7 @@ namespace Checkers
         public Grid LastKillDCheckerBlack { get; set; }
 
         private int IdCurrentGamer { get; set; }
+        private int IdSecondGamer { get; set; }
         private int IdCurrentGame { get; set; }
 
         private bool IsResetForCheckers = true;
@@ -51,6 +53,7 @@ namespace Checkers
         public XDocument CurrentStatus { get; set; }
         public int IdGamerColorWhite { get; set; }
         private GameService gameService = null;
+        ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
         public OnlineGame()
         {
             this.InitializeComponent();
@@ -174,7 +177,7 @@ namespace Checkers
             string[] parameters = e.Parameter.ToString().Split(',');
             IdCurrentGamer = Convert.ToInt32(parameters[0]);
             IdCurrentGame = Convert.ToInt32(parameters[1]);
-           
+
             if (parameters.Length > 2)
             {
                 CurrentStatus = XDocument.Parse(parameters[2]);
@@ -201,6 +204,7 @@ namespace Checkers
             }
             SetCurrentStep();
             PopulateCheckers();
+            PopulateCurrentGamers();
             UpdateStateTimer.Start();
         }
 
@@ -216,12 +220,19 @@ namespace Checkers
             {
                 currentGamerStep.Visibility = Visibility.Visible;
                 remoteGamerStep.Visibility = Visibility.Collapsed;
+
+                //currentGamerStepBorder.Visibility = Visibility.Visible;
+                //remoteGamerStepBorder.Visibility = Visibility.Collapsed;
             }
             else
             {
                 //if (isRotateGrid) gameGridPlane.RotationZ = 180;
                 currentGamerStep.Visibility = Visibility.Collapsed;
                 remoteGamerStep.Visibility = Visibility.Visible;
+
+                ////if (isRotateGrid) gameGridPlane.RotationZ = 180;
+                //currentGamerStepBorder.Visibility = Visibility.Collapsed;
+                //remoteGamerStepBorder.Visibility = Visibility.Visible;
             }
         }
 
@@ -331,7 +342,6 @@ namespace Checkers
             }
         }
 
-
         private void MatrixToGrid(XDocument CurrentStatus)
         {
             foreach (var item in CurrentStatus.Descendants("matrix").Elements())
@@ -401,7 +411,6 @@ namespace Checkers
         //        }
         //    }
         //}
-
 
         private void f_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -570,7 +579,6 @@ namespace Checkers
             //    CurrentCheckers = CheckerColors.White;
             //}
         }
-
 
         //private async void MoveChecker(Grid currentGrid, Grid newGrid)
         //{
@@ -761,7 +769,6 @@ namespace Checkers
             }
             return matrix;
         }
-
 
         private async Task<bool> SendGridToServer()
         {
@@ -1320,6 +1327,27 @@ namespace Checkers
         {
             if (Frame.CanGoBack)
                 Frame.GoBack();
+        }
+
+        private async void PopulateCurrentGamers()
+        {
+            string firstGamerResponse = await gameService.OnlineGameServiceCall("GET", string.Format("GetGamer/{0}", roamingSettings.Values["idFirstGamer"]));
+            XDocument firstXml = XDocument.Parse(CleanXml(firstGamerResponse));          
+            firstGamerImage.Source = new BitmapImage(new Uri(firstXml.Descendants("GetGamerResult").FirstOrDefault().Element("ImageSource").Value, UriKind.Absolute));
+            firstGamerFirstName.Text = firstXml.Descendants("GetGamerResult").FirstOrDefault().Element("FirstName").Value;
+            firstGamerLastName.Text = firstXml.Descendants("GetGamerResult").FirstOrDefault().Element("LastName").Value;
+            firstGamerCity.Text = firstXml.Descendants("GetGamerResult").FirstOrDefault().Element("City").Value;
+
+            string idSecondGamerResponse = await gameService.OnlineGameServiceCall("GET", string.Format("GetSecondGamerId/{0}/{1}", IdCurrentGame, roamingSettings.Values["idFirstGamer"]));
+            XDocument idSecondGamerXml = XDocument.Parse(CleanXml(idSecondGamerResponse));
+            string idSecondGamer = idSecondGamerXml.Root.Value;
+            string secondGamerResponse = await gameService.OnlineGameServiceCall("GET", string.Format("GetGamer/{0}", idSecondGamer));
+            XDocument secondXml = XDocument.Parse(CleanXml(secondGamerResponse));
+            secondGamerImage.Source = new BitmapImage(new Uri(secondXml.Descendants("GetGamerResult").FirstOrDefault().Element("ImageSource").Value, UriKind.Absolute));
+            secondGamerFirstName.Text = secondXml.Descendants("GetGamerResult").FirstOrDefault().Element("FirstName").Value;
+            secondGamerLastName.Text = secondXml.Descendants("GetGamerResult").FirstOrDefault().Element("LastName").Value;
+            secondGamerCity.Text = secondXml.Descendants("GetGamerResult").FirstOrDefault().Element("City").Value;
+
         }
     }
 }

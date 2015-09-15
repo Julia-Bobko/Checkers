@@ -24,22 +24,23 @@
                     <Grid>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock Text="ВВЕДИТЕ ЛОГИН СОПЕРНИКА:" Margin="0,10,10,10" FontSize="22"></TextBlock>
+                                <TextBlock Text="ПОИСК:" Margin="0,10,10,10" FontSize="22"></TextBlock>
                                 <TextBox InputScope="Search" x:Name="findLogin" Width="200" Margin="10" TextChanged="findLogin_TextChanged" Loaded="findLogin_Loaded"></TextBox>
                                 <!--<Button x:Name="findGames" Content="Найти"></Button>-->
                             </StackPanel>
                             <ListBox x:Name="ListOnlineGamers" SelectionChanged="ListOnlineGamers_SelectionChanged" Loaded="ListOnlineGamers_Loaded">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid HorizontalAlignment="Left" Height="141" Margin="20,0,0,20" VerticalAlignment="Top" Width="415">
+                                        <Grid HorizontalAlignment="Left" Height="141" Margin="20,0,0,20" VerticalAlignment="Top">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="31*"/>
                                                 <ColumnDefinition Width="52*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Image Source="https://pp.vk.me/c623324/v623324292/180e1/MXdoA7KHItw.jpg"/>
+                                            <Image Source="{Binding ImageSource}"/>
                                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
                                                 <TextBlock Text="{Binding Login}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
-                                                <TextBlock Text="{Binding Rating}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text="{Binding City}" FontSize="26" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
+                                                <!--<TextBlock Text="{Binding Rating}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>-->
                                                 <!--<TextBlock Text="{Binding Website.AbsoluteUri}" FontSize="20"></TextBlock>-->
                                                 <!--<HyperlinkButton Margin="0" HorizontalAlignment="Left" FontSize="20" NavigateUri="{Binding Website}" Content="{Binding Website.AbsoluteUri}" />-->
                                             </StackPanel>
@@ -67,15 +68,15 @@
                             <ListBox x:Name="ListCurrentGames" SelectionChanged="ListCurrentGames_SelectionChanged" Loaded="ListCurrentGames_Loaded">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid HorizontalAlignment="Left" Height="141" Margin="20,0,0,20" VerticalAlignment="Top" Width="415">
+                                        <Grid HorizontalAlignment="Left" Height="141" Margin="20,0,0,20" VerticalAlignment="Top">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="31*"/>
                                                 <ColumnDefinition Width="52*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Image Source="https://pp.vk.me/c623324/v623324292/180e1/MXdoA7KHItw.jpg"/>
+                                            <Image Source="{Binding ImageSource}"/>
                                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
                                                 <TextBlock Text="{Binding Login}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
-                                                <TextBlock Text="{Binding Rating}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text="{Binding City}" FontSize="26" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
                                             </StackPanel>
                                         </Grid>
                                     </DataTemplate>
@@ -101,17 +102,15 @@
                             <ListBox x:Name="ListFinishedGames" SelectionChanged="ListFinishedGames_SelectionChanged" Loaded="ListFinishedGames_Loaded">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid HorizontalAlignment="Left" Height="141" Margin="20,0,0,20" VerticalAlignment="Top" Width="415">
+                                        <Grid HorizontalAlignment="Left" Height="141" Margin="20,0,0,20" VerticalAlignment="Top">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="31*"/>
                                                 <ColumnDefinition Width="52*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Image Source="https://pp.vk.me/c623324/v623324292/180e1/MXdoA7KHItw.jpg"/>
+                                            <Image Source="{Binding ImageSource}"/>
                                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
                                                 <TextBlock Text="{Binding Login}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
-                                                <TextBlock Text="{Binding Rating}" FontSize="30" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
-                                                <!--<TextBlock Text="{Binding Website.AbsoluteUri}" FontSize="20"></TextBlock>-->
-                                                <!--<HyperlinkButton Margin="0" HorizontalAlignment="Left" FontSize="20" NavigateUri="{Binding Website}" Content="{Binding Website.AbsoluteUri}" />-->
+                                                <TextBlock Text="{Binding City}" FontSize="26" Foreground="White" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
                                             </StackPanel>
                                         </Grid>
                                     </DataTemplate>

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,6 +36,8 @@ namespace Checkers
         private TextBox FindLogin = default(TextBox);
         private DispatcherTimer UpdateStateTimer { get; set; }
         private int IdGame { get; set; }
+
+        ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
         public OnlineGameDetails()
         {
             this.InitializeComponent();
@@ -105,6 +108,7 @@ namespace Checkers
             }
             else
             {
+                //roamingSettings.Values["idSecondGamer"] = game.IdFirstGamer;
                 Frame.Navigate(typeof(OnlineGame), String.Format("{0},{1}", idCurrentGamer, game.IdGame));
             }
         }
@@ -126,7 +130,7 @@ namespace Checkers
 
         private async void CreateGame()
         {
-            var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            
             int idFirstGamer = (int)roamingSettings.Values["idFirstGamer"];
             // roamingSettings.Values.Remove("idFirstGamer");      
             var response = await gameService.OnlineGameServiceCall("GET", String.Format("CreateGame/{0}", idFirstGamer));
@@ -143,7 +147,6 @@ namespace Checkers
      
         private async void PopulateCurrentGames()
         {
-            var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
             int idFirstGamer = (int)roamingSettings.Values["idFirstGamer"];
             string xmlListGames = await gameService.OnlineGameServiceCall("GET", String.Format("GetCurrentGames/{0}", idFirstGamer.ToString()));
             XDocument xml = XDocument.Parse(CleanXml(xmlListGames));
@@ -154,7 +157,11 @@ namespace Checkers
                 {
                     CurrentGame game = new CurrentGame();
                     game.IdGame = Convert.ToInt32(item.Element("IdGame").Value);
-                    game.Login = item.Element("Login").Value;
+                    game.Login = string.IsNullOrEmpty(item.Element("Login").Value) ? item.Element("FirstName").Value + " " + item.Element("LastName").Value : item.Element("Login").Value;
+                    game.FirstName = item.Element("FirstName").Value;
+                    game.LastName = item.Element("LastName").Value;
+                    game.ImageSource = item.Element("ImageSource").Value;
+                    game.City = item.Element("City").Value;
                     game.Rating = Convert.ToInt32(item.Element("Rating").Value);
                     game.IdGamer = Convert.ToInt32(item.Element("IdGamer").Value);
                     listGames.Add(game);
@@ -169,7 +176,6 @@ namespace Checkers
 
         private async void PopulateOnlineGamers(string userName = "0")
         {
-            var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
             int idFirstGamer = (int)roamingSettings.Values["idFirstGamer"];
             string xmlListGames = await gameService.OnlineGameServiceCall("GET", String.Format("GetGames/{0}/{1}/{2}", idFirstGamer.ToString(), userName, "0"));
             XDocument xml = XDocument.Parse(CleanXml(xmlListGames));
@@ -180,7 +186,11 @@ namespace Checkers
                 {
                     CheckersGame game = new CheckersGame();
                     game.IdGame = Convert.ToInt32(item.Element("IdGame").Value);
-                    game.Login = item.Element("Login").Value;
+                    game.Login = string.IsNullOrEmpty(item.Element("Login").Value) ? item.Element("FirstName").Value + " " + item.Element("LastName").Value : item.Element("Login").Value;
+                    game.FirstName = item.Element("FirstName").Value;
+                    game.LastName = item.Element("LastName").Value;
+                    game.ImageSource = item.Element("ImageSource").Value;
+                    game.City = item.Element("City").Value;
                     game.Rating = Convert.ToInt32(item.Element("Rating").Value);
                     game.IdFirstGamer = Convert.ToInt32(item.Element("IdFirstGamer").Value);
                     listGames.Add(game);
@@ -236,6 +246,7 @@ namespace Checkers
             string currentStatatus = xml.Descendants("GetCurrentStatusGameResult").FirstOrDefault().Element("CurrentStatus").Value;
             int idCurrentGamer = Convert.ToInt32(xml.Descendants("GetCurrentStatusGameResult").FirstOrDefault().Element("IdCurrentGamer").Value);
             int idGamerColorWhite = Convert.ToInt32(xml.Descendants("GetCurrentStatusGameResult").FirstOrDefault().Element("IdGamerColorWhite").Value);
+            //roamingSettings.Values["idSecondGamer"] = game.IdGamer;
             Frame.Navigate(typeof(OnlineGame), String.Format("{0},{1},{2},{3}", idCurrentGamer, game.IdGame, currentStatatus, idGamerColorWhite));
         }
 
@@ -263,7 +274,6 @@ namespace Checkers
 
         private async void PopulateFinishedGamers()
         {
-            var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
             int idFirstGamer = (int)roamingSettings.Values["idFirstGamer"];
             string xmlListGames = await gameService.OnlineGameServiceCall("GET", String.Format("GetFinishedGames/{0}", idFirstGamer.ToString()));
             XDocument xml = XDocument.Parse(CleanXml(xmlListGames));
@@ -274,7 +284,11 @@ namespace Checkers
                 {
                     CurrentGame game = new CurrentGame();
                     game.IdGame = Convert.ToInt32(item.Element("IdGame").Value);
-                    game.Login = item.Element("Login").Value;
+                    game.Login = string.IsNullOrEmpty(item.Element("Login").Value) ? item.Element("FirstName").Value + " " + item.Element("LastName").Value : item.Element("Login").Value;
+                    game.FirstName = item.Element("FirstName").Value;
+                    game.LastName = item.Element("LastName").Value;
+                    game.ImageSource = item.Element("ImageSource").Value;
+                    game.City = item.Element("City").Value;
                     game.Rating = Convert.ToInt32(item.Element("Rating").Value);
                     game.IdGamer = Convert.ToInt32(item.Element("IdGamer").Value);
                     listGames.Add(game);

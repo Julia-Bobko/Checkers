@@ -17,6 +17,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Entities\CheckersGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\CurrentGame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Gamer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\InputGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\ResultStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\UpdateStatus.cs" />

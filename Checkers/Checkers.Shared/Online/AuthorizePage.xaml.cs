@@ -1,12 +1,16 @@
-﻿using Checkers.Helpers;
+﻿using Checkers.Entities;
+using Checkers.Helpers;
 using Checkers.Services;
 using Facebook;
 using Facebook.Client;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using System.Xml.Linq;
 using VK.WindowsPhone.SDK;
 using VK.WindowsPhone.SDK.API;
@@ -200,9 +204,34 @@ namespace Checkers.Online
         }
         #endregion
 
-        private void SaveSettings(object vK, long id, string photo_200, string first_name, string last_name, string v)
+        private async void SaveSettings(string authentication, long id, string photo_200, string first_name, string last_name, string city)
         {
-
+            var gamer = new Gamer
+            {
+                Authentication = authentication,
+                SocialId = id,
+                ImageSource = photo_200,
+                FirstName = first_name,
+                LastName = last_name,
+                City = city,
+                Email = string.Empty,
+                Login = string.Empty,
+                HashPassword = string.Empty
+            };
+            var serialized = JsonConvert.SerializeObject(new { obj = gamer });
+            var response = await authorizeService.AuthorizeServiceCall("POST", "CreateGamer", new StringContent(serialized, Encoding.UTF8, "application/json"));
+            XDocument xml = XDocument.Parse(response);
+            int idFirstGamer = Convert.ToInt32(xml.Root.Value);
+            if (idFirstGamer <=0)
+            {
+                return;//TODO:
+            }
+            else
+            {
+                var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+                roamingSettings.Values["idFirstGamer"] = idFirstGamer;
+                Frame.Navigate(typeof(OnlineGameDetails));
+            }
         }
     }
 }
