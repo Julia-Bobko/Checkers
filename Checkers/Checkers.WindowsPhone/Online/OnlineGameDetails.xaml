@@ -8,6 +8,15 @@
     mc:Ignorable="d" NavigationCacheMode="Enabled">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="51*"/>
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="731*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="358*"/>
+            <ColumnDefinition Width="99*"/>
+        </Grid.ColumnDefinitions>
         <Grid.Background>
             <ImageBrush ImageSource="ms-appx:///Images/fon2.jpg"/>
         </Grid.Background>
@@ -18,8 +27,8 @@
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="backButton" Icon="Back" Height="95" Margin="10,46,10,0" Click="Back_Click"/>
         </Grid>
-        <Hub x:Name="MainHub" Header="онлайн игра" Margin="70,0,0,0">            
-<HubSection Header="новая игра">
+        <Hub x:Name="MainHub" Header="онлайн игра" Margin="70,0,0,0">
+            <HubSection Header="новая игра">
                 <DataTemplate>
                     <Grid>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -95,7 +104,7 @@
                 </DataTemplate>
             </HubSection>
             <HubSection Header="завершенные игры">
-                <DataTemplate>                   
+                <DataTemplate>
                     <Grid>
                         <StackPanel Orientation="Vertical" Margin="0,0,0,0">
                             <ListBox x:Name="ListFinishedGames" SelectionChanged="ListFinishedGames_SelectionChanged" Loaded="ListFinishedGames_Loaded">
@@ -136,5 +145,10 @@
                 </DataTemplate>
             </HubSection>
         </Hub>
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Image x:Name="logout" Source="ms-appx:///Images/menu/Logout-50.png" Width="50" Margin="30" Tapped="logout_Tapped"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

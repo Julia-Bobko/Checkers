@@ -52,6 +52,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Images\dchecker-black.png" />
     <Content Include="$(MSBuildThisFileDirectory)Images\dchecker-white.png" />
     <Content Include="$(MSBuildThisFileDirectory)Images\dRedChecker.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\menu\Logout-50.png" />
     <Content Include="$(MSBuildThisFileDirectory)Images\redChecker.png" />
     <Content Include="$(MSBuildThisFileDirectory)Images\whiteBoard.png" />
     <Content Include="$(MSBuildThisFileDirectory)Images\whiteBoard2.png" />

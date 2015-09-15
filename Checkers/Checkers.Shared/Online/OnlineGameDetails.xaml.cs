@@ -1,13 +1,18 @@
 ﻿using Checkers.Entities;
 using Checkers.Helpers;
+using Checkers.Online;
 using Checkers.Services;
+using Facebook;
+using Facebook.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using VK.WindowsPhone.SDK;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -18,6 +23,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Web.Http;
+using Windows.Web.Http.Filters;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -32,7 +39,7 @@ namespace Checkers
         private ListBox ListCurrentGames = default(ListBox);
         private ListBox ListOnlineGamers = default(ListBox);
         private ListBox ListFinishedGames = default(ListBox);
-        
+
         private TextBox FindLogin = default(TextBox);
         private DispatcherTimer UpdateStateTimer { get; set; }
         private int IdGame { get; set; }
@@ -69,7 +76,7 @@ namespace Checkers
                     Frame.Navigate(typeof(OnlineGame), String.Format("{0},{1}", idCurrentGamer, idGame));
                 }
             };
-            UpdateStateTimer.Start();           
+            UpdateStateTimer.Start();
         }
 
 
@@ -130,7 +137,7 @@ namespace Checkers
 
         private async void CreateGame()
         {
-            
+
             int idFirstGamer = (int)roamingSettings.Values["idFirstGamer"];
             // roamingSettings.Values.Remove("idFirstGamer");      
             var response = await gameService.OnlineGameServiceCall("GET", String.Format("CreateGame/{0}", idFirstGamer));
@@ -144,7 +151,7 @@ namespace Checkers
         }
 
 
-     
+
         private async void PopulateCurrentGames()
         {
             int idFirstGamer = (int)roamingSettings.Values["idFirstGamer"];
@@ -221,7 +228,7 @@ namespace Checkers
         private void ListCurrentGames_Loaded(object sender, RoutedEventArgs e)
         {
             ListCurrentGames = sender as ListBox;
-            PopulateCurrentGames();            
+            PopulateCurrentGames();
         }
 
         private void ListOnlineGamers_Loaded(object sender, RoutedEventArgs e)
@@ -258,7 +265,7 @@ namespace Checkers
 
         private void findLogin_Loaded(object sender, RoutedEventArgs e)
         {
-            FindLogin = sender as TextBox;          
+            FindLogin = sender as TextBox;
         }
 
         private void ListFinishedGames_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -301,6 +308,34 @@ namespace Checkers
             ListFinishedGames.ItemsSource = listGames;
         }
 
-    
+        private async void logout_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            UpdateStateTimer.Stop();
+            string authentication = roamingSettings.Values["authentication"].ToString();
+            switch (authentication)
+            {
+                case "vk":
+                    VKSDK.Logout();
+                    break;
+                case "fb":
+                    {
+                        Session.ActiveSession.Logout();
+                        HttpBaseProtocolFilter myFilter = new HttpBaseProtocolFilter();
+                        var cookieManager = myFilter.CookieManager;
+                        HttpCookieCollection myCookieJar = cookieManager.GetCookies(new Uri("https://www.facebook.com"));
+                        foreach (HttpCookie cookie in myCookieJar)
+                        {
+                            cookieManager.DeleteCookie(cookie);
+                        }
+                    }
+                    break;
+                default:
+                    Frame.Navigate(typeof(AuthorizePage));
+                    break;
+            }
+            roamingSettings.Values.Remove("idFirstGamer");
+            roamingSettings.Values.Remove("authentication");
+            Frame.Navigate(typeof(AuthorizePage));
+        }
     }
 }

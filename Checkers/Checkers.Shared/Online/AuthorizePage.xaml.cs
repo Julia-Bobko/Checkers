@@ -192,15 +192,18 @@ namespace Checkers.Online
         private void fb_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Session.OnFacebookAuthenticationFinished += OnFacebookAuthenticationFinished;
-            Session.ActiveSession.LoginWithBehavior("email,public_profile,user_friends", FacebookLoginBehavior.LoginBehaviorWebViewOnly);       
+            Session.ActiveSession.LoginWithBehavior("email,public_profile,user_friends", FacebookLoginBehavior.LoginBehaviorWebViewOnly);
         }
 
         private async void OnFacebookAuthenticationFinished(AccessTokenData session)
         {
-            var fb = new FacebookClient(session.AccessToken);
-            dynamic result = await fb.GetTaskAsync("me?fields=picture.width(100).height(100),first_name,last_name,location");
-            var user = new GraphUser(result);
-            SaveSettings("fb", long.Parse(user.Id), user.ProfilePictureUrl.AbsoluteUri, user.FirstName, user.LastName, user.Location != null && !String.IsNullOrEmpty(user.Location.City) ? user.Location.City : "Unknown");
+            if (session != null && !string.IsNullOrEmpty(session.AccessToken))
+            {
+                var fb = new FacebookClient(session.AccessToken);
+                dynamic result = await fb.GetTaskAsync("me?fields=picture.width(100).height(100),first_name,last_name,location");
+                var user = new GraphUser(result);
+                SaveSettings("fb", long.Parse(user.Id), user.ProfilePictureUrl.AbsoluteUri, user.FirstName, user.LastName, user.Location != null && !String.IsNullOrEmpty(user.Location.City) ? user.Location.City : "Unknown");
+            }
         }
         #endregion
 
@@ -222,7 +225,7 @@ namespace Checkers.Online
             var response = await authorizeService.AuthorizeServiceCall("POST", "CreateGamer", new StringContent(serialized, Encoding.UTF8, "application/json"));
             XDocument xml = XDocument.Parse(response);
             int idFirstGamer = Convert.ToInt32(xml.Root.Value);
-            if (idFirstGamer <=0)
+            if (idFirstGamer <= 0)
             {
                 return;//TODO:
             }
@@ -230,6 +233,7 @@ namespace Checkers.Online
             {
                 var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
                 roamingSettings.Values["idFirstGamer"] = idFirstGamer;
+                roamingSettings.Values["authentication"] = authentication;
                 Frame.Navigate(typeof(OnlineGameDetails));
             }
         }
