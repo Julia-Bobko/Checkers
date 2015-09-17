@@ -5,7 +5,7 @@
     xmlns:local="using:Checkers"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" NavigationCacheMode="Enabled">
+    mc:Ignorable="d" NavigationCacheMode="Enabled" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -146,6 +146,12 @@
         </Hub>
         <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Border CornerRadius="50" BorderBrush="White"  Margin="0" Width="70" Height="70">
+                    <Border.Background>
+                        <ImageBrush x:Name="ava" ImageSource="https://pp.vk.me/c629530/v629530292/11099/ScrbW_LXOc8.jpg"/>
+                    </Border.Background>
+                    <!--<Image x:Name="ava" Source="https://pp.vk.me/c629530/v629530292/11099/ScrbW_LXOc8.jpg" Margin="0"/>-->
+                </Border>
                 <Image x:Name="logout" Source="ms-appx:///Images/menu/Logout-50.png" Width="50" Margin="30" Tapped="logout_Tapped"/>
             </StackPanel>
         </Grid>

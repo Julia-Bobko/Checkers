@@ -22,6 +22,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
@@ -336,6 +337,18 @@ namespace Checkers
             roamingSettings.Values.Remove("idFirstGamer");
             roamingSettings.Values.Remove("authentication");
             Frame.Navigate(typeof(AuthorizePage));
+        }
+
+        private async void SetProfileValues()
+        {
+            string firstGamerResponse = await gameService.OnlineGameServiceCall("GET", string.Format("GetGamer/{0}", roamingSettings.Values["idFirstGamer"]));
+            XDocument firstXml = XDocument.Parse(CleanXml(firstGamerResponse));
+            ava.ImageSource = new BitmapImage(new Uri(firstXml.Descendants("GetGamerResult").FirstOrDefault().Element("ImageSource").Value, UriKind.Absolute));
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetProfileValues();
         }
     }
 }
